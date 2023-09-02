@@ -1,8 +1,8 @@
-import { HtmlEscapedString } from "hono/utils/html.ts";
+import { Children } from "$/utils/types.ts";
 
 export interface PageProps {
   title: string;
-  children: HtmlEscapedString;
+  children: Children;
 }
 
 export function Page({ title, children }: PageProps) {
