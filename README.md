@@ -1,6 +1,6 @@
 # htmlist
 
-Build Web Apps with Pure HTML
+`htmlist` is a next-gen web framework that enables you to build web apps with full SSR and pure HTML.
 
 ## Tech Stack
 
