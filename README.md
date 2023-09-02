@@ -1,6 +1,13 @@
 # htmlist
 
-`htmlist` is a next-gen web framework that enables you to build web apps with full SSR and pure HTML.
+`htmlist` is a next-gen web framework that enables you to build web apps with pure HTML.
+
+## Features
+
+- **Pure HTML**: No separated JavaScript or CSS file, only HTML
+- **Complete SSR**: Zero custom client JavaScript
+- **Edge First**: Easily deploy to Deno Deploy
+- **Ultra Fast**: No build step, dependencies kept to a minimum
 
 ## Tech Stack
 
