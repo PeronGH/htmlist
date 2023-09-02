@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "start": "deno run -A server.tsx",
     "dev": "deno run -A --watch=routes/,htmx/,utils/,server.tsx server.tsx"
   },
   "imports": {
