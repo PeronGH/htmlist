@@ -1,8 +1,7 @@
-import { Children } from "$/utils/types.ts";
+import { FC, PropsWithChildren } from "$/utils/types.ts";
 
-export interface PageProps {
+export interface PageProps extends PropsWithChildren {
   title: string;
-  children: Children;
 }
 
 export function Page({ title, children }: PageProps) {
