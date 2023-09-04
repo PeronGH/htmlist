@@ -31,20 +31,29 @@ type ForceStringValues<T> = {
   [K in keyof T]: string;
 };
 
-type HtmxHttpMethodAndPathToHandler = {
-  [M in HtmxHttpMethod]: Record<string, HxHandler | undefined>;
+// initialize router map
+type HtmxHttpMethodAndIdToHandler = {
+  [M in HtmxHttpMethod]: Map<string, HxHandler>;
 };
 
-// initialize router map
-const methodAndPathToHandler: HtmxHttpMethodAndPathToHandler = {
-  get: {},
-  post: {},
+const methodAndIdToHandler: HtmxHttpMethodAndIdToHandler = {
+  get: new Map(),
+  post: new Map(),
+};
+
+type HtmxHttpMethodAndHandlerToPath = {
+  [M in HtmxHttpMethod]: Map<HxHandler, string>;
+};
+
+const methodAndHandlerToPath: HtmxHttpMethodAndHandlerToPath = {
+  get: new Map(),
+  post: new Map(),
 };
 
 for (const method of htmxHttpMethods) {
   hxRouter[method]("/:id", (ctx) => {
     const { id } = ctx.req.param();
-    const handler = methodAndPathToHandler[method][id];
+    const handler = methodAndIdToHandler[method].get(id);
     if (handler) {
       return handler(ctx);
     }
@@ -52,17 +61,9 @@ for (const method of htmxHttpMethods) {
   });
 }
 
-// cache
-const hxCache = new Map<string, ReturnType<typeof hx>>();
-
 export function hx<P extends HxParams>(
   params: P,
 ): AddPrefix<ForceStringValues<P>, "hx-"> {
-  const id = new Error().stack!;
-  const cached = hxCache.get(id);
-  if (cached) {
-    return cached as AddPrefix<ForceStringValues<P>, "hx-">;
-  }
   // register routes for methods
   const methodToPath: Partial<Record<HtmxHttpMethod, string>> = {};
 
@@ -70,21 +71,26 @@ export function hx<P extends HxParams>(
     const handler = params[method];
     if (!handler) continue;
 
-    const uuid = crypto.randomUUID();
-    methodAndPathToHandler[method][uuid] = handler;
+    // check if handler is already registered
+    const cachedPath = methodAndHandlerToPath[method].get(handler);
+    if (cachedPath) {
+      methodToPath[method] = cachedPath;
+      console.debug("hx:", `cache hit: ${method} ${cachedPath}`);
+      continue;
+    }
 
-    methodToPath[method] = `/hx/${uuid}`;
-    console.debug("hx:", `new route: ${method} /hx/${uuid}`);
+    const uuid = crypto.randomUUID();
+    const path = `/hx/${uuid}`;
+    methodAndIdToHandler[method].set(uuid, handler);
+
+    methodToPath[method] = path;
+    methodAndHandlerToPath[method].set(handler, path);
+    console.debug("hx:", `new route: ${method} ${path}`);
   }
 
   // return htmx attributes
-  const attributes = addPrefix({
+  return addPrefix({
     ...params,
     ...methodToPath,
   } as ForceStringValues<P>);
-
-  hxCache.set(id, attributes);
-  console.debug("hx:", `cached: ${JSON.stringify(attributes)}`);
-
-  return attributes;
 }

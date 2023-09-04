@@ -2,7 +2,7 @@ import "std/dotenv/load.ts";
 import { Hono } from "hono/mod.ts";
 import { Page } from "$/htmx/page.tsx";
 import { assets } from "$/routes/assets.ts";
-import { hx, hxRouter } from "$/utils/hx.ts";
+import { hx, HxHandler, hxRouter } from "$/utils/hx.ts";
 
 const app = new Hono();
 
@@ -11,19 +11,20 @@ app.route("/hx", hxRouter);
 
 // Your code goes here:
 
+const returnDate: HxHandler = (ctx) =>
+  ctx.html(
+    <p>
+      Loaded at {new Date().toString()}
+    </p>,
+  );
+
 app.get("/", (ctx) =>
   ctx.html(
     <Page title="Index Page">
       <div class="container mx-auto p-4">
         <button
           {...hx({
-            get(ctx) {
-              return ctx.html(
-                <p>
-                  Loaded at {new Date().toString()}
-                </p>,
-              );
-            },
+            get: returnDate,
             target: "#content",
             swap: "innerHTML",
           })}
