@@ -2,7 +2,9 @@ import { Hono } from "hono/mod.ts";
 import { lazy } from "$/utils/lazy.ts";
 
 const tailwindcssScript = lazy(() =>
-  fetch("https://cdn.tailwindcss.com/3.3.3")
+  fetch(
+    "https://cdn.tailwindcss.com/3.3.3?plugins=forms,typography,aspect-ratio",
+  )
 );
 const htmxScript = lazy(() =>
   fetch("https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js")
