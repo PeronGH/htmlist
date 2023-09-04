@@ -41,14 +41,7 @@ const methodAndIdToHandler: HtmxHttpMethodAndIdToHandler = {
   post: new Map(),
 };
 
-type HtmxHttpMethodAndHandlerToPath = {
-  [M in HtmxHttpMethod]: Map<HxHandler, string>;
-};
-
-const methodAndHandlerToPath: HtmxHttpMethodAndHandlerToPath = {
-  get: new Map(),
-  post: new Map(),
-};
+const handlerToPath = new Map<HxHandler, string>();
 
 for (const method of htmxHttpMethods) {
   hxRouter[method]("/:id", (ctx) => {
@@ -72,7 +65,7 @@ export function hx<P extends HxParams>(
     if (!handler) continue;
 
     // check if handler is already registered
-    const cachedPath = methodAndHandlerToPath[method].get(handler);
+    const cachedPath = handlerToPath.get(handler);
     if (cachedPath) {
       methodToPath[method] = cachedPath;
       console.debug("hx:", `cache hit: ${method} ${cachedPath}`);
@@ -84,7 +77,7 @@ export function hx<P extends HxParams>(
     methodAndIdToHandler[method].set(uuid, handler);
 
     methodToPath[method] = path;
-    methodAndHandlerToPath[method].set(handler, path);
+    handlerToPath.set(handler, path);
     console.debug("hx:", `new route: ${method} ${path}`);
   }
 
