@@ -12,6 +12,7 @@
 ## Tech Stack
 
 - **Hono**
+- **hyperscript**
 - **htmx**
 - **Tailwind CSS**
 

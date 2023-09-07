@@ -33,7 +33,21 @@ app.get(
   (ctx) =>
     ctx.html(
       <div id="replaceMe" class="mt-4 p-2 border-4 border-indigo-500 rounded">
-        Loaded at {new Date().toString()}
+        <p>Loaded at {new Date().toString()}</p>
+        <button
+          class="p-2 border-2 border-indigo-500 rounded"
+          _="
+on pointerdown
+  repeat until event pointerup
+    set rand to Math.random() * 255
+    transition
+      *background-color
+      to `hsl($rand 100% 90%)`
+      over 250ms
+  end"
+        >
+          Click Me and Hold
+        </button>
       </div>,
     ),
 );

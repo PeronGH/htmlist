@@ -10,6 +10,9 @@ const fetchTailwindcssScript = lazy(() =>
 const fetchHtmxScript = lazy(() =>
   fetch(`https://unpkg.com/htmx.org@${VERSIONS.HTMX}/dist/htmx.min.js`)
 );
+const fetchHyperscriptScript = lazy(() =>
+  fetch(`https://unpkg.com/hyperscript.org@${VERSIONS.HYPERSCRIPT}`)
+);
 
 export const assets = new Hono();
 
@@ -20,4 +23,8 @@ assets.get(
 assets.get(
   `/htmx@${VERSIONS.HTMX}`,
   () => fetchHtmxScript().then((res) => res.clone()),
+);
+assets.get(
+  `/hyperscript@${VERSIONS.HYPERSCRIPT}`,
+  () => fetchHyperscriptScript().then((res) => res.clone()),
 );

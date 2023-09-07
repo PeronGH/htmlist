@@ -14,6 +14,7 @@ export function Page({ title, children }: PageProps) {
         <title>{title}</title>
         <script src={`/assets/tailwindcss@${VERSIONS.TAILWINDCSS}`} />
         <script src={`/assets/htmx@${VERSIONS.HTMX}`} />
+        <script src={`/assets/hyperscript@${VERSIONS.HYPERSCRIPT}`} />
       </head>
       <body>
         {children}
