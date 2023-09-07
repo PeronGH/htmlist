@@ -47,9 +47,7 @@ app.get(
         />
         <button
           class="ml-2 p-2 border-2 border-indigo-500 rounded"
-          _="
-          on click
-            put `Hi, ${<input/>'s value}!` into #content"
+          _="on click put `Hi, ${<input/>'s value}!` into #content"
         >
           Greet
         </button>
