@@ -2,9 +2,11 @@ import "std/dotenv/load.ts";
 import { Hono } from "hono/mod.ts";
 import { Page } from "$/htmx/page.tsx";
 import { assets } from "$/routes/assets.ts";
+import { serveStatic } from "hono/middleware.ts";
 
 const app = new Hono();
 
+app.get("*", serveStatic({ root: "./static/" }));
 app.route("/assets", assets);
 
 // Your code goes here:
