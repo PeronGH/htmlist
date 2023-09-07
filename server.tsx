@@ -6,7 +6,6 @@ import { serveStatic } from "hono/middleware.ts";
 
 const app = new Hono();
 
-app.get("*", serveStatic({ root: "./static/" }));
 app.route("/assets", assets);
 
 // Your code goes here:
@@ -51,5 +50,7 @@ on pointerdown
       </div>,
     ),
 );
+
+app.get("*", serveStatic({ root: "./static/" }));
 
 Deno.serve(app.fetch);
