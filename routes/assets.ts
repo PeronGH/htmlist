@@ -1,19 +1,23 @@
 import { Hono } from "hono/mod.ts";
 import { lazy } from "$/utils/lazy.ts";
+import { VERSIONS } from "$/constants/versions.ts";
 
-const tailwindcssScript = lazy(() =>
+const fetchTailwindcssScript = lazy(() =>
   fetch(
-    "https://cdn.tailwindcss.com/3.3.3?plugins=forms,typography,aspect-ratio",
+    `https://cdn.tailwindcss.com/${VERSIONS.TAILWINDCSS}?plugins=forms,typography,aspect-ratio`,
   )
 );
-const htmxScript = lazy(() =>
-  fetch("https://unpkg.com/htmx.org@1.9.5/dist/htmx.min.js")
+const fetchHtmxScript = lazy(() =>
+  fetch(`https://unpkg.com/htmx.org@${VERSIONS.HTMX}/dist/htmx.min.js`)
 );
 
 export const assets = new Hono();
 
 assets.get(
-  "/tailwindcss",
-  () => tailwindcssScript().then((res) => res.clone()),
+  `/tailwindcss@${VERSIONS.TAILWINDCSS}`,
+  () => fetchTailwindcssScript().then((res) => res.clone()),
 );
-assets.get("/htmx", () => htmxScript().then((res) => res.clone()));
+assets.get(
+  `/htmx@${VERSIONS.HTMX}`,
+  () => fetchHtmxScript().then((res) => res.clone()),
+);
