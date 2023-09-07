@@ -11,10 +11,10 @@
 
 ## Tech Stack
 
-- **Hono**
-- **hyperscript**
-- **htmx**
-- **Tailwind CSS**
+- [Hono](https://hono.dev)
+- [hyperscript](https://hyperscript.org/)
+- [htmx](https://htmx.org/)
+- [Tailwind CSS](https://tailwindcss.com)
 
 ## Usage
 
