@@ -1,9 +1,9 @@
-import type { HtmlEscaped, HtmlEscapedString } from "hono/utils/html.ts";
+import type { HtmlEscaped } from "hono/utils/html.ts";
 
 export type Children =
   | string
-  | HtmlEscapedString
-  | HtmlEscapedString[];
+  | HtmlEscaped
+  | HtmlEscaped[];
 
 export interface PropsWithChildren {
   children?: Children;
