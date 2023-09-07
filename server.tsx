@@ -3,6 +3,8 @@ import { Hono } from "hono/mod.ts";
 import { Page } from "$/htmx/page.tsx";
 import { assets } from "$/routes/assets.ts";
 import { serveStatic } from "hono/middleware.ts";
+import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
 
 const app = new Hono();
 
@@ -15,37 +17,41 @@ app.get("/", (ctx) =>
     <Page title="Index Page">
       <div class="container mx-auto p-4">
         <button
+          id="load-btn"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           hx-get="/load"
-          hx-target="#replaceMe"
+          hx-target="#content"
           hx-swap="outerHTML"
         >
           Load
         </button>
-        <div id="replaceMe" />
+        <div id="content" />
       </div>
     </Page>,
   ));
 
 app.get(
   "/load",
+  zValidator("query", z.object({ defaultName: z.string().default("you") })),
   (ctx) =>
     ctx.html(
-      <div id="replaceMe" class="mt-4 p-2 border-4 border-indigo-500 rounded">
-        <p>Loaded at {new Date().toString()}</p>
+      <div
+        id="content"
+        class="mt-4 p-2 border-4 border-indigo-500 rounded"
+        _="init put 'Reload' into #load-btn"
+      >
+        <input
+          type="text"
+          name="name"
+          value={ctx.req.valid("query").defaultName}
+        />
         <button
-          class="p-2 border-2 border-indigo-500 rounded"
+          class="ml-2 p-2 border-2 border-indigo-500 rounded"
           _="
-on pointerdown
-  repeat until event pointerup
-    set rand to Math.random() * 255
-    transition
-      *background-color
-      to `hsl($rand 100% 90%)`
-      over 250ms
-  end"
+          on click
+            put `Hi, ${<input/>'s value}!` into #content"
         >
-          Click Me and Hold
+          Greet
         </button>
       </div>,
     ),
