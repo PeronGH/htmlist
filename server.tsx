@@ -19,7 +19,7 @@ app.get("/", (ctx) =>
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           hx-get="/load"
           hx-target="#replaceMe"
-          hx-swap="innerHTML"
+          hx-swap="outerHTML"
         >
           Load
         </button>
