@@ -1,20 +1,13 @@
 import "std/dotenv/load.ts";
 import { Hono } from "hono/mod.ts";
 import { Page } from "$/htmx/page.tsx";
-import { assets } from "$/routes/assets.ts";
+import { initFsRouting } from "$/utils/fs_routing.ts";
 
 const app = new Hono();
 
-app.route("/assets", assets);
+await initFsRouting(app, import.meta.url);
 
 // Your code goes here:
-
-const returnDate: HxHandler = (ctx) =>
-  ctx.html(
-    <p>
-      Loaded at {new Date().toString()}
-    </p>,
-  );
 
 app.get("/", (ctx) =>
   ctx.html(
