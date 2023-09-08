@@ -4,11 +4,10 @@ import { Page } from "$/htmx/page.tsx";
 import { serveStatic } from "hono/middleware.ts";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import { initFsRouting } from "$/utils/fs_routing.ts";
+import { assetsRouter } from "$/routes/assets.ts";
 
 const app = new Hono();
-
-await initFsRouting(app, import.meta.url);
+app.route("/assets", assetsRouter);
 
 // Your code goes here:
 
@@ -56,5 +55,4 @@ app.get(
 );
 
 app.get("*", serveStatic({ root: "./static/" }));
-
 Deno.serve(app.fetch);
