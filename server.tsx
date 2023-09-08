@@ -1,14 +1,14 @@
 import "std/dotenv/load.ts";
 import { Hono } from "hono/mod.ts";
 import { Page } from "$/htmx/page.tsx";
-import { assets } from "$/routes/assets.ts";
 import { serveStatic } from "hono/middleware.ts";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
+import { initFsRouting } from "$/utils/fs_routing.ts";
 
 const app = new Hono();
 
-app.route("/assets", assets);
+await initFsRouting(app, import.meta.url);
 
 // Your code goes here:
 

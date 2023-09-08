@@ -14,17 +14,19 @@ const fetchHyperscriptScript = lazy(() =>
   fetch(`https://unpkg.com/hyperscript.org@${VERSIONS.HYPERSCRIPT}`)
 );
 
-export const assets = new Hono();
+const assetsRouter = new Hono();
 
-assets.get(
+assetsRouter.get(
   `/tailwindcss@${VERSIONS.TAILWINDCSS}`,
   () => fetchTailwindcssScript().then((res) => res.clone()),
 );
-assets.get(
+assetsRouter.get(
   `/htmx@${VERSIONS.HTMX}`,
   () => fetchHtmxScript().then((res) => res.clone()),
 );
-assets.get(
+assetsRouter.get(
   `/hyperscript@${VERSIONS.HYPERSCRIPT}`,
   () => fetchHyperscriptScript().then((res) => res.clone()),
 );
+
+export default assetsRouter;
