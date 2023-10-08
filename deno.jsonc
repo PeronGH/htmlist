@@ -6,13 +6,13 @@
   "imports": {
     "$/": "./",
     "std/": "https://deno.land/std@0.201.0/",
-    "hono": "https://deno.land/x/hono@v3.6.3/mod.ts",
-    "hono/": "https://deno.land/x/hono@v3.6.3/",
-    "hono/validator": "https://deno.land/x/hono@v3.6.3/validator/index.ts",
-    "hono/jsx/jsx-runtime": "https://deno.land/x/hono@v3.6.3/jsx/jsx-runtime.ts",
-    "hono/jsx/jsx-dev-runtime": "https://deno.land/x/hono@v3.6.3/jsx/jsx-dev-runtime.ts",
+    "hono": "https://deno.land/x/hono@v3.7.5/mod.ts",
+    "hono/": "https://deno.land/x/hono@v3.7.5/",
+    "hono/validator": "https://deno.land/x/hono@v3.7.5/validator/index.ts",
+    "hono/jsx/jsx-runtime": "https://deno.land/x/hono@v3.7.5/jsx/jsx-runtime.ts",
+    "hono/jsx/jsx-dev-runtime": "https://deno.land/x/hono@v3.7.5/jsx/jsx-dev-runtime.ts",
     "zod": "https://deno.land/x/zod@v3.22.2/mod.ts",
-    "@hono/zod-validator": "https://esm.sh/@hono/zod-validator@0.1.8?external=hono,zod"
+    "@hono/zod-validator": "https://esm.sh/@hono/zod-validator@0.1.9?external=hono,zod"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
